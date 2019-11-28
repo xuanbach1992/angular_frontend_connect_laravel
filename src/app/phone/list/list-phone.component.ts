@@ -11,6 +11,7 @@ import {Router} from '@angular/router';
 })
 export class ListPhoneComponent implements OnInit {
   private phones: IPhone[] = [];
+  searchTitle: string;
 
   constructor(private phoneService: PhoneService,
               private router: Router) {
@@ -26,6 +27,16 @@ export class ListPhoneComponent implements OnInit {
     if (confirm('Are you sure?')) {
       this.phoneService.deleteSuccess(id).subscribe((result: IHttpResult) => {
         return this.ngOnInit();
+      });
+    }
+  }
+
+  search2() {
+    if (this.searchTitle === '') {
+      return this.ngOnInit();
+    } else {
+      this.phones = this.phones.filter(res => {
+        return res.name.toLowerCase().match(this.searchTitle.toLowerCase());
       });
     }
   }
